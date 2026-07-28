@@ -1,0 +1,49 @@
+---
+const {
+  title,
+  description,
+  image = '/questdrafting/assets/render-pool-twilight.jpg',
+  type = 'website',
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const img = new URL(image, Astro.site).href;
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'LocalBusiness',
+  name: 'Quest Drafting & Design LLC',
+  description:
+    'Residential architectural drafting, 3D visualization, and permit stewardship in Greater Phoenix, Arizona.',
+  telephone: '+1-602-339-6455',
+  email: 'info@questdraftinganddesign.com',
+  url: 'https://shaningrid1207.github.io/questdrafting/',
+  areaServed: ['Gilbert', 'Queen Creek', 'Mesa', 'Chandler', 'Phoenix', 'Scottsdale'],
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Gilbert',
+    addressRegion: 'AZ',
+    addressCountry: 'US',
+  },
+};
+---
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{title}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+<meta property="og:type" content={type} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={img} />
+<meta property="og:url" content={canonical} />
+<meta property="og:site_name" content="Quest Drafting & Design" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={img} />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Marcellus&family=EB+Garamond:ital,wght@1,400;1,500&family=Hanken+Grotesk:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap"
+  rel="stylesheet"
+/>
+<script type="application/ld+json" set:html={JSON.stringify(ld)} />
