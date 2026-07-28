@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://shaningrid1207.github.io/questdrafting/sitemap-index.xml
