@@ -1,0 +1,136 @@
+---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<div class="viewport rv" id="model">
+  <div class="vp-head">
+    <span class="mlabel">Sheet A-000 · The Model</span>
+    <span class="tag sticker" style="rotate:2deg">SCALE <b>1/4&quot; = 1'-0&quot;</b></span>
+  </div>
+  <div class="vp-frame vp-marks" style="aspect-ratio:4/3.1">
+    <canvas id="gl" aria-label="Interactive 3D wireframe house. Drag to rotate."></canvas>
+    <img class="fallback" src={`${base}/assets/render-motorcourt.jpg`} alt="Render of a contemporary stone estate" />
+    <span class="vp-hint" id="vpHint">Drag to rotate</span>
+  </div>
+  <div class="vp-foot">
+    <div class="pens" role="group" aria-label="Pen color">
+      <span class="mlabel">Pen</span>
+      <button class="pen on" data-c="ink" aria-label="Ink pen" aria-pressed="true"><i></i></button>
+      <button class="pen" data-c="copper" aria-label="Copper pen" aria-pressed="false"><i></i></button>
+      <button class="pen" data-c="blue" aria-label="Blueprint pen" aria-pressed="false"><i></i></button>
+      <button class="pen" data-c="red" aria-label="Red pen" aria-pressed="false"><i></i></button>
+    </div>
+    <span class="barcode sticker" aria-hidden="true"><span class="bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span>QST-2026-AZ</span></span>
+  </div>
+</div>
+
+<script is:inline src={`${base}/lib/three.min.js`}></script>
+<script is:inline src={`${base}/lib/gsap.min.js`}></script>
+<script is:inline src={`${base}/lib/ScrollTrigger.min.js`}></script>
+<script is:inline>
+(function(){
+'use strict';
+var rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+var hasGsap=!!(window.gsap&&window.ScrollTrigger);
+if(hasGsap)gsap.registerPlugin(ScrollTrigger);
+
+/* sticker entrances: stamped in */
+if(hasGsap&&!rm){
+  ScrollTrigger.batch('.sticker',{start:'top 90%',once:true,
+    onEnter:function(els){gsap.fromTo(els,{scale:1.6,opacity:0},{scale:1,opacity:1,duration:.45,stagger:.08,ease:'power4.out'});}});
+}
+
+/* ---------- 3D viewport: drag-orbit wireframe house ---------- */
+var PENS={ink:0x1D1A14,copper:0xB96A2E,blue:0x2F62C4,red:0xB5402A};
+var canvas=document.getElementById('gl');
+var webgl=false;
+try{var t=document.createElement('canvas');webgl=!!(window.WebGLRenderingContext&&(t.getContext('webgl')||t.getContext('experimental-webgl')));}catch(e){}
+if(!(webgl&&window.THREE)){document.body.classList.add('no3d');}
+else{
+  var renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+  renderer.setClearColor(0xFCFAF3,1);
+  var scene=new THREE.Scene();
+  var cam=new THREE.PerspectiveCamera(33,4/3.1,.1,100);
+  var grid=new THREE.GridHelper(40,40,0xC9BFA8,0xE6DECC);
+  grid.material.transparent=true;grid.material.opacity=.55;scene.add(grid);
+
+  function boxEdges(w,h,d,x,y,z){
+    var g=new THREE.EdgesGeometry(new THREE.BoxGeometry(w,h,d));
+    var p=g.attributes.position.array,out=[];
+    for(var i=0;i<p.length;i+=6){out.push([p[i]+x,p[i+1]+y,p[i+2]+z,p[i+3]+x,p[i+4]+y,p[i+5]+z]);}
+    g.dispose();return out;
+  }
+  function vline(x,y0,y1,z){return [[x,y0,z,x,y1,z]];}
+  var segs=[].concat(
+    boxEdges(10,3,6.4,0,1.5,0),boxEdges(10.8,.22,7,0,3.12,0),
+    boxEdges(7,2.7,5.4,-2.3,4.36,.3),boxEdges(7.8,.22,6,-2.3,5.82,.3),
+    boxEdges(4.6,2.7,5.2,6.4,1.35,-.4),boxEdges(5.2,.2,5.8,6.4,2.81,-.4),
+    boxEdges(2.4,.16,1.7,2.7,2.62,3.8),
+    boxEdges(.16,2.54,.16,1.8,1.27,4.1),boxEdges(.16,2.54,.16,3.6,1.27,4.1),
+    boxEdges(5.8,.18,2.9,2.6,.09,6.2),boxEdges(6.8,.06,3.7,2.6,.03,6.2),
+    boxEdges(.7,1.1,.7,-4.5,6.45,1.4)
+  );
+  for(var mx=-3.8;mx<=3.8;mx+=1.26)segs=segs.concat(vline(mx,.25,2.75,3.22));
+  for(var ux=-5.2;ux<=.6;ux+=1.16)segs=segs.concat(vline(ux,3.3,5.5,3.02));
+  var flat=new Float32Array(segs.length*6);
+  segs.forEach(function(s,i){for(var k=0;k<6;k++)flat[i*6+k]=s[k];});
+  var geo=new THREE.BufferGeometry();
+  geo.setAttribute('position',new THREE.BufferAttribute(flat,3));
+  var mat=new THREE.LineBasicMaterial({color:PENS.ink,transparent:true,opacity:.95});
+  scene.add(new THREE.LineSegments(geo,mat));
+
+  /* drag orbit + inertia + idle autorotate */
+  var yaw={t:.65,c:.65},pitch={t:.5,c:.5},vel=0,dragging=false,lastT=0,idle=0;
+  var px=0,py=0;
+  canvas.addEventListener('pointerdown',function(e){
+    dragging=true;px=e.clientX;py=e.clientY;vel=0;idle=0;
+    canvas.setPointerCapture(e.pointerId);
+    var hint=document.getElementById('vpHint');if(hint)hint.style.opacity=0;
+  });
+  canvas.addEventListener('pointermove',function(e){
+    if(!dragging)return;
+    var dx=e.clientX-px,dy=e.clientY-py;px=e.clientX;py=e.clientY;
+    yaw.t+=dx*.0065;vel=dx*.0065;
+    pitch.t=Math.max(.12,Math.min(1.15,pitch.t+dy*.005));
+  });
+  ['pointerup','pointercancel'].forEach(function(ev){canvas.addEventListener(ev,function(){dragging=false;});});
+
+  function size(){
+    var w=canvas.clientWidth,h=canvas.clientHeight;
+    if(!w||!h)return;
+    renderer.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();
+  }
+  size();window.addEventListener('resize',size);
+
+  var visible=true;
+  new IntersectionObserver(function(es){es.forEach(function(e){visible=e.isIntersecting;});}).observe(canvas);
+
+  (function frame(){
+    requestAnimationFrame(frame);
+    if(!visible||document.hidden)return;
+    if(!dragging){
+      yaw.t+=vel;vel*=.94;                 // inertia
+      idle++;if(idle>140&&!rm)yaw.t+=.0018; // idle autorotate
+    }
+    yaw.c+=(yaw.t-yaw.c)*.1;pitch.c+=(pitch.t-pitch.c)*.1;
+    var rad=21.5,base=2.1;
+    cam.position.set(Math.sin(yaw.c)*Math.cos(pitch.c-.5)*rad,
+                     3.5+Math.sin(pitch.c)*8,
+                     Math.cos(yaw.c)*Math.cos(pitch.c-.5)*rad);
+    cam.lookAt(0,base,0);
+    renderer.render(scene,cam);
+  })();
+
+  /* pen swatches recolor linework live */
+  document.querySelectorAll('.pen').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      document.querySelectorAll('.pen').forEach(function(b){b.classList.remove('on');b.setAttribute('aria-pressed','false');});
+      btn.classList.add('on');btn.setAttribute('aria-pressed','true');
+      var c=new THREE.Color(PENS[btn.getAttribute('data-c')]);
+      if(hasGsap&&!rm){gsap.to(mat.color,{r:c.r,g:c.g,b:c.b,duration:.5,ease:'power2.out'});}
+      else{mat.color.copy(c);}
+    });
+  });
+}
+})();
+</script>
