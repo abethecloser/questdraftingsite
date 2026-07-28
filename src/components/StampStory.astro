@@ -1,0 +1,58 @@
+---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<section id="story" style="padding:0">
+  <div class="story-pin">
+    <div class="story-head">
+      <span class="mlabel">One sheet · Six stations</span>
+      <h2>Follow your sheet from <em>survey to stamp</em></h2>
+    </div>
+    <div class="story-sheet" id="sheet">
+      <div class="sh-img"><img src={`${base}/assets/sheet-dimensional-plan.jpg`} alt="Dimensional floor plan sheet A103 of a custom residence" /></div>
+      <div class="sh-foot"><span>829 N Poinciana Ct · Gilbert AZ</span><b>SHEET A-103</b></div>
+      <span class="landing l1"><span class="stamp-rect" style="color:var(--ink);border-color:var(--ink)">Survey verified</span></span>
+      <span class="landing l2"><span class="stamp-rect" style="color:var(--blue);border-color:var(--blue)">Design approved</span></span>
+      <span class="landing l3"><span class="stamp-rect" style="color:var(--copper);border-color:var(--copper)">3D model signed off</span></span>
+      <span class="landing l4"><span class="stamp-rect">CD set complete</span></span>
+      <span class="landing l5">
+        <span class="stamp-round" aria-label="Approved stamp">
+          <svg viewBox="0 0 120 120">
+            <defs><path id="arcE" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"></path></defs>
+            <circle cx="60" cy="60" r="56" fill="none" stroke="#B5402A" stroke-width="2.5"></circle>
+            <circle cx="60" cy="60" r="34" fill="none" stroke="#B5402A" stroke-width="1.5"></circle>
+            <text fill="#B5402A" font-family="JetBrains Mono,monospace" font-size="10" letter-spacing="2.5"><textPath href="#arcE">CITY OF GILBERT · PLAN REVIEW · 2026 ·</textPath></text>
+            <text x="60" y="65" text-anchor="middle" fill="#B5402A" font-family="JetBrains Mono,monospace" font-weight="700" font-size="13" letter-spacing="2">APPROVED</text>
+          </svg>
+        </span>
+      </span>
+    </div>
+    <div class="story-steps" aria-hidden="true">
+      <span class="sstep on" data-s="0">01 Survey</span>
+      <span class="sstep" data-s="1">02 Design</span>
+      <span class="sstep" data-s="2">03 3D Model</span>
+      <span class="sstep" data-s="3">04 CD Set</span>
+      <span class="sstep" data-s="4">05 Submittal</span>
+      <span class="sstep" data-s="5">06 Approved</span>
+    </div>
+  </div>
+</section>
+<script is:inline>
+(function(){
+'use strict';
+var rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+var hasGsap=!!(window.gsap&&window.ScrollTrigger);
+var steps=document.querySelectorAll('.sstep');
+function setStep(i){steps.forEach(function(s,k){s.classList.toggle('on',k<=i);});}
+if(hasGsap&&!rm){
+  var lands=['.l1','.l2','.l3','.l4','.l5'];
+  var tl=gsap.timeline({defaults:{ease:'power4.out'},
+    scrollTrigger:{trigger:'#story',start:'top top',end:'bottom bottom',scrub:.5,
+      onUpdate:function(self){setStep(Math.min(5,Math.floor(self.progress*6)));}}});
+  lands.forEach(function(sel,i){
+    tl.fromTo(sel,{opacity:0,scale:1.8,rotate:'+=10'},{opacity:1,scale:1,rotate:'-=10',duration:.1},.12+i*.17);
+  });
+  gsap.fromTo('#sheet',{y:40,opacity:0},{y:0,opacity:1,duration:.8,ease:'power3.out',
+    scrollTrigger:{trigger:'#story',start:'top 70%',once:true}});
+}else{setStep(5);}
+})();
+</script>
