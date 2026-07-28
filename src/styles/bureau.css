@@ -84,7 +84,7 @@ header.stuck{border-color:var(--line)}
 .nav-links a:not(.btn){font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2)}
 .nav-links a:not(.btn):hover{color:var(--copper)}
 @media(max-width:880px){.nav-links{display:none}}
-@media(max-width:520px){.logo .t span{display:none}.nav{height:62px}.nav .btn{padding:11px 15px;font-size:11px;box-shadow:2px 2px 0 rgba(29,26,20,.2)}}
+@media(max-width:520px){.logo .t span{display:none}.nav{height:62px}.nav .btn{padding:11px 15px;font-size:11px;box-shadow:2px 2px 0 rgba(29,26,20,.2)}.nav .quote-btn{display:none}}
 .btn{display:inline-flex;align-items:center;gap:.6em;font-family:var(--mono);font-weight:500;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;padding:14px 26px;border-radius:6px;cursor:pointer;border:1px solid var(--ink);background:var(--ink);color:var(--paper);transition:transform .16s var(--eo),background .3s,color .3s;box-shadow:3px 3px 0 rgba(29,26,20,.2)}
 .btn:active{transform:scale(.97)}
 .btn:hover{background:var(--copper);border-color:var(--copper)}
@@ -93,8 +93,10 @@ header.stuck{border-color:var(--line)}
 
 /* mobile nav toggle */
 .navtoggle{display:none;background:none;border:1px solid var(--line-2);border-radius:6px;padding:9px 12px;cursor:pointer;font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--ink-2)}
+.mobile-only{display:none}
 @media(max-width:880px){
   .navtoggle{display:inline-flex;align-items:center;gap:8px}
+  .mobile-only{display:block}
   .nav-links{position:absolute;top:100%;left:0;right:0;background:var(--sheet);border-bottom:1px solid var(--line);flex-direction:column;gap:0;padding:8px 0;display:none}
   .nav-links.open{display:flex}
   .nav-links li{width:100%}
@@ -110,6 +112,7 @@ header.stuck{border-color:var(--line)}
 .hero-ctas{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
 .hero .dim{margin-top:26px;max-width:330px}
 .hero-stickers{position:relative}
+.hero-stickers > .mlabel{display:block}
 .hero .stamp-rect{position:absolute;top:-34px;right:6%;z-index:2}
 @media(max-width:920px){.hero .stamp-rect{position:static;display:inline-block;margin-bottom:14px}}
 
@@ -152,7 +155,7 @@ body.no3d .vp-frame .fallback{display:block;aspect-ratio:4/3.1;object-fit:cover;
 @media(prefers-reduced-motion:reduce){.ticker .track{animation:none}}
 
 /* ---------- stamp story (pinned) ---------- */
-#story{height:380vh;position:relative}
+#story{height:380vh;position:relative;overflow-x:clip}
 body.rmotion #story{height:auto}
 .story-pin{position:sticky;top:0;height:100vh;height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden}
 body.rmotion .story-pin{position:relative;padding:80px 0}

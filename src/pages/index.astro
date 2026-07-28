@@ -1,6 +1,88 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero3D from '../components/Hero3D.astro';
+import Ticker from '../components/Ticker.astro';
+import StampStory from '../components/StampStory.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
-<BaseLayout title="Quest Drafting & Design" description="Temporary home placeholder.">
-  <section><div class="wrap"><h1>Home coming up</h1></div></section>
+<BaseLayout
+  title="Quest Drafting & Design — Residential Drafting Studio | Phoenix, AZ"
+  description="Architectural design, photoreal 3D, complete construction documents, and permit approval for Greater Phoenix. One studio, one standard, one flat fee.">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div class="hero-stickers">
+        <span class="stamp-rect sticker rv">Issued for permit</span>
+        <span class="mlabel rv">Residential drafting studio · Gilbert, AZ</span>
+        <h1 class="rv">The home, <em>resolved</em> on paper first</h1>
+        <p class="sub rv">Architectural design, photoreal 3D, complete construction documents, and permit approval. One studio, one standard, one flat fee.</p>
+        <div class="hero-ctas rv">
+          <a class="btn" href={`${base}/contact`}>Get a Quote</a>
+          <a class="btn btn-ghost" href="#story">Follow the Sheet</a>
+        </div>
+        <div class="dim rv" aria-hidden="true"><span class="ln"></span><span>FROM SKETCH TO STAMP · 6 STEPS</span><span class="ln"></span></div>
+      </div>
+      <Hero3D />
+    </div>
+  </section>
+
+  <Ticker />
+
+  <StampStory />
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <h2>A complete practice,<br />under one roof</h2>
+        <span class="tag sticker" style="rotate:-3deg">EST. <b>GILBERT AZ</b></span>
+      </div>
+      <div class="svc-grid rv">
+        <div class="svc"><span class="no">SVC·01</span><h3>Architectural Design</h3><p>Custom homes, hillside estates, additions, casitas, and site structures, shaped by your lot and your zoning.</p><span class="tag sticker">A-100</span></div>
+        <div class="svc"><span class="no">SVC·02</span><h3>3D Visualization</h3><p>Photoreal renderings and full models. You approve the home itself, not a flat drawing.</p><span class="tag sticker">3D·VIS</span></div>
+        <div class="svc"><span class="no">SVC·03</span><h3>Construction Documents</h3><p>The complete coordinated set, around 22 sheets across 6 disciplines, drawn to 2024 code.</p><span class="tag sticker">22·SHT</span></div>
+        <div class="svc"><span class="no">SVC·04</span><h3>Permit Stewardship</h3><p>Checklist-formatted submittals and every redline answered, until the permit is in hand.</p><span class="tag sticker">APPRVD</span></div>
+      </div>
+      <div style="text-align:center;margin-top:clamp(30px,4vw,48px)">
+        <a class="btn btn-ghost" href={`${base}/services`}>Explore all services</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section class="work-sec" id="work">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <h2>From vision, to model,<br />to permit</h2>
+        <span class="mlabel">Selected work · 2024–2026</span>
+      </div>
+      <div class="gal">
+        <div class="g g-wide rv"><img src={`${base}/assets/render-pool-twilight.jpg`} alt="Twilight render of a modern estate above a pool terrace" /><span class="tag sticker">MODERN ESTATE · <b>TWILIGHT</b></span></div>
+        <div class="g g-tall rv"><img src={`${base}/assets/render-greatroom.jpg`} alt="Great room interior render with mountain views" /><span class="tag sticker">HILLSIDE · <b>GREAT ROOM</b></span></div>
+        <div class="g g-half rv"><img src={`${base}/assets/render-night-stars.jpg`} alt="Desert home glowing beneath a starry night sky" /><span class="tag sticker">DESERT · <b>NIGHT STUDY</b></span></div>
+        <div class="g g-half rv"><img src={`${base}/assets/sheet-elevations.jpg`} alt="Exterior elevation sheet A201" /><span class="tag sticker">SHEET <b>A-201</b></span></div>
+      </div>
+      <div style="text-align:center;margin-top:clamp(30px,4vw,48px)">
+        <a class="btn btn-ghost" href={`${base}/work`}>View full portfolio</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="contact-cta">
+    <div class="wrap in">
+      <span class="seal sticker" aria-hidden="true">Q</span>
+      <span class="mlabel rv">Gilbert · Queen Creek · Mesa · Chandler · Phoenix · Scottsdale</span>
+      <h2 class="rv">Put your project <em>on the board</em></h2>
+      <p class="rv">Tell us about your property and what you intend to create. We respond with a flat fee, a defined timeline, and exactly what your jurisdiction requires.</p>
+      <div class="ctas rv">
+        <a class="btn" href={`${base}/contact`}>Get a Quote</a>
+        <span class="dim" style="max-width:150px" aria-hidden="true"><span class="ln"></span><span>OR</span><span class="ln"></span></span>
+        <a class="btn btn-ghost" href="tel:+16023396455">Schedule a Call</a>
+      </div>
+      <a class="phone rv" href="tel:+16023396455">(602) 339-6455</a>
+    </div>
+  </section>
+
 </BaseLayout>

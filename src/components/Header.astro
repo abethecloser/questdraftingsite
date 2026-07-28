@@ -17,10 +17,11 @@ const links = [
     </a>
     <ul class="nav-links" id="navLinks">
       {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+      <li class="mobile-only"><a href={`${base}/contact`}>Get a Quote</a></li>
     </ul>
     <div style="display:flex;gap:12px;align-items:center">
       <button class="navtoggle" id="navToggle" aria-expanded="false" aria-controls="navLinks">MENU</button>
-      <a href={`${base}/contact`} class="btn">Get a Quote</a>
+      <a href={`${base}/contact`} class="btn quote-btn">Get a Quote</a>
     </div>
   </div>
 </header>
