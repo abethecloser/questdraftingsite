@@ -1,0 +1,76 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const values = [
+  { no: 'VAL·01', title: 'One accountable studio', body: 'Design, 3D, documents, and permitting under one roof. No hand-offs, no finger-pointing — one team owns the outcome from survey to stamp.' },
+  { no: 'VAL·02', title: 'Resolved on paper first', body: 'We settle the hard questions in the model and the drawings, where changes are free, so the build site stays calm and on budget.' },
+  { no: 'VAL·03', title: 'Built for the East Valley', body: 'We draw to the codes and checklists our local jurisdictions actually use, so submittals clear review instead of bouncing back.' },
+  { no: 'VAL·04', title: 'One flat fee', body: 'A defined scope, a defined timeline, and a flat fee agreed up front. You always know what you are getting and what it costs.' },
+];
+---
+<BaseLayout
+  title="About — Quest Drafting & Design | Gilbert, AZ"
+  description="Quest Drafting & Design is a residential architectural drafting studio in Gilbert, Arizona, serving the greater Phoenix East Valley from first sketch to permit approval.">
+
+  <section>
+    <div class="wrap">
+      <div class="center-head rv">
+        <span class="mlabel">The studio · Gilbert, AZ</span>
+        <h2>A drafting bureau for<br />the way homes get built</h2>
+        <p class="lead" style="margin-inline:auto">Quest Drafting &amp; Design is a residential architectural drafting studio in Gilbert, Arizona. We turn a property and an idea into a home that is resolved on paper — modeled, documented, and permitted — before the first shovel hits the ground.</p>
+      </div>
+
+      <div class="two-col rv" style="align-items:center">
+        <div>
+          <span class="mlabel" style="display:block;margin-bottom:12px">Our story</span>
+          <p class="prose">
+            {/* TODO: confirm founding year and founder story */}
+            Founded in Gilbert <strong>[founding year — please confirm]</strong>, Quest Drafting &amp; Design grew from a simple conviction: homeowners and builders deserve a single studio that can take a project all the way from concept to an approved permit, without losing anything in translation between designer, renderer, and drafter.
+          </p>
+          <p class="prose">
+            {/* TODO: confirm owner name(s), background, and any professional credentials */}
+            The studio is led by <strong>[owner name — please confirm]</strong>, whose background in <strong>[background / credentials — please confirm]</strong> shapes how every set is drawn. Today we serve custom-home clients, builders, and property owners across the greater Phoenix East Valley.
+          </p>
+        </div>
+        <div class="viewport" style="padding:14px">
+          <div class="vp-head"><span class="mlabel">Sheet A-000 · The Studio</span><span class="tag sticker" style="rotate:2deg">EST. <b>GILBERT AZ</b></span></div>
+          <div class="sh-img" style="border:1px solid var(--line-2);border-radius:4px;overflow:hidden">
+            <img src={`${base}/assets/render-motorcourt.jpg`} alt="A recent Quest Drafting & Design residential render" style="width:100%;aspect-ratio:4/3;object-fit:cover" loading="lazy" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="work-sec">
+    <div class="wrap">
+      <div class="sec-head rv">
+        <h2>How we work</h2>
+        <span class="mlabel">Survey → stamp · 6 stations</span>
+      </div>
+      <div class="svc-grid rv">
+        {values.map((v) => (
+          <div class="svc">
+            <span class="no">{v.no}</span>
+            <h3>{v.title}</h3>
+            <p>{v.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="wrap in">
+      <span class="mlabel rv">Gilbert · Queen Creek · Mesa · Chandler · Phoenix · Scottsdale</span>
+      <h2 class="rv">Let's build <em>together</em></h2>
+      <p class="rv">Whether you are a homeowner with a lot and a vision or a builder who needs a permit-ready set, we would like to hear about your project.</p>
+      <div class="ctas rv">
+        <a class="btn" href={`${base}/contact`}>Get a Quote</a>
+        <a class="btn btn-ghost" href={`${base}/work`}>See Our Work</a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>

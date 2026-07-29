@@ -1,0 +1,121 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const services = [
+  {
+    no: 'SVC·01',
+    tag: 'A-100',
+    title: 'Architectural Design',
+    lead: 'From first massing study to a resolved floor plan — shaped by your lot, your zoning, and how you actually live.',
+    body: 'We design custom homes, hillside and desert estates, additions, casitas, guest houses, and site structures. Every plan is drawn to your parcel: setbacks, easements, grade, view corridors, and the way the Arizona sun moves across the site. You get a home that fits its lot instead of fighting it.',
+    includes: [
+      'Site & massing studies tuned to setbacks and grade',
+      'Floor plans, roof plans, and exterior elevations',
+      'Zoning-aware design for Gilbert & East Valley jurisdictions',
+      'Additions, remodels, casitas, ADUs & RV garages',
+    ],
+  },
+  {
+    no: 'SVC·02',
+    tag: '3D·VIS',
+    title: '3D Visualization',
+    lead: 'You approve the home itself — not a flat line drawing you have to imagine in three dimensions.',
+    body: 'Before a single construction sheet is finalized, we build a full 3D model and photoreal renderings so you can walk the exterior, study materials, and catch changes while they are still free to make. It is the single best way to avoid expensive surprises during construction.',
+    includes: [
+      'Full 3D massing & material model of your home',
+      'Photoreal exterior renderings, day and twilight',
+      'Design revisions resolved in 3D before documentation',
+      'Shared views so every decision-maker sees the same home',
+    ],
+  },
+  {
+    no: 'SVC·03',
+    tag: '22·SHT',
+    title: 'Construction Documents',
+    lead: 'The complete, coordinated set your builder and your city both need — typically around 22 sheets.',
+    body: 'A permit-ready construction document set spans multiple disciplines and has to agree with itself on every sheet. We produce a coordinated package drawn to current code so your contractor can build from it and your jurisdiction can review it without a pile of corrections.',
+    includes: [
+      'Cover, site, floor, roof, elevation & section sheets',
+      'Coordinated details across roughly 6 disciplines',
+      'Drawn to the 2024 IBC / IRC / IECC code cycle',
+      'A set your builder can price and build from directly',
+    ],
+  },
+  {
+    no: 'SVC·04',
+    tag: 'APPRVD',
+    title: 'Permit Stewardship',
+    lead: 'We do not hand you drawings and disappear — we stay with the submittal until the permit is in hand.',
+    body: 'Every jurisdiction has its own checklist and its own reviewers. We format submittals to match, respond to plan-review comments, and turn redlines around quickly so your project keeps moving. You get one point of contact from first sketch to final stamp.',
+    includes: [
+      'Checklist-formatted submittals per jurisdiction',
+      'Plan-review corrections & redlines answered',
+      'Resubmittals managed until approval',
+      'One accountable studio from survey to stamp',
+    ],
+  },
+];
+---
+<BaseLayout
+  title="Services — Architectural Drafting, 3D & Permits | Quest Drafting & Design"
+  description="Residential architectural design, photoreal 3D visualization, complete construction document sets, and permit stewardship for Greater Phoenix, Arizona.">
+
+  <section>
+    <div class="wrap">
+      <div class="center-head rv">
+        <span class="mlabel">What we do · Gilbert, AZ</span>
+        <h2>A complete practice,<br />under one roof</h2>
+        <p class="lead" style="margin-inline:auto">Design, visualization, documentation, and permitting are not four vendors to juggle. They are one continuous process — and we own all of it, from the first sketch to the city's stamp.</p>
+      </div>
+
+      {services.map((s, i) => (
+        <div class="svc-detail rv" style={i > 0 ? 'border-top:1px solid var(--line);' : ''}>
+          <div class="svc-detail-head">
+            <span class="no mono">{s.no}</span>
+            <span class="tag sticker">{s.tag}</span>
+          </div>
+          <div class="two-col">
+            <div>
+              <h3 class="svc-detail-title">{s.title}</h3>
+              <p class="lead" style="margin-top:10px">{s.lead}</p>
+              <p class="prose" style="margin-top:16px">{s.body}</p>
+            </div>
+            <div>
+              <span class="mlabel" style="display:block;margin-bottom:14px">Included</span>
+              <ul class="checklist">
+                {s.includes.map((it) => <li>{it}</li>)}
+              </ul>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="wrap in">
+      <span class="mlabel rv">One studio · One standard · One flat fee</span>
+      <h2 class="rv">Ready to put it <em>on paper</em>?</h2>
+      <p class="rv">Tell us about your property and what you intend to build. We respond with a flat fee, a defined timeline, and exactly what your jurisdiction requires.</p>
+      <div class="ctas rv">
+        <a class="btn" href={`${base}/contact`}>Get a Quote</a>
+        <span class="dim" style="max-width:150px" aria-hidden="true"><span class="ln"></span><span>OR</span><span class="ln"></span></span>
+        <a class="btn btn-ghost" href="tel:+16023396455">Schedule a Call</a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .svc-detail{padding:clamp(40px,6vw,72px) 0}
+  .svc-detail-head{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px}
+  .svc-detail-head .no{font-size:11px;letter-spacing:.2em;color:var(--copper)}
+  .svc-detail-title{font-size:clamp(26px,3.4vw,40px)}
+  .checklist{list-style:none;display:flex;flex-direction:column;gap:12px}
+  .checklist li{position:relative;padding-left:30px;color:var(--ink-2);font-size:15.5px;line-height:1.55}
+  .checklist li::before{content:"";position:absolute;left:0;top:2px;width:17px;height:17px;border:1.5px solid var(--copper);border-radius:4px}
+  .checklist li::after{content:"";position:absolute;left:5px;top:5px;width:7px;height:10px;border:solid var(--copper);border-width:0 2px 2px 0;transform:rotate(43deg)}
+</style>

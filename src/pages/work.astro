@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const projects = [
+  { src: 'render-pool-twilight.jpg', alt: 'Twilight render of a modern estate above a pool terrace', tag: 'MODERN ESTATE', b: 'TWILIGHT', span: 'g-wide' },
+  { src: 'render-greatroom.jpg', alt: 'Great room interior render with mountain views', tag: 'HILLSIDE', b: 'GREAT ROOM', span: 'g-tall' },
+  { src: 'render-motorcourt.jpg', alt: 'Render of a contemporary stone estate motor court', tag: 'STONE ESTATE', b: 'MOTOR COURT', span: 'g-tall' },
+  { src: 'render-night-stars.jpg', alt: 'Desert home glowing beneath a starry night sky', tag: 'DESERT', b: 'NIGHT STUDY', span: 'g-wide' },
+  { src: 'model-massing-white.jpg', alt: 'White massing model of a residential design', tag: 'MASSING', b: 'STUDY MODEL', span: 'g-half' },
+  { src: 'model-massing-terrain.jpg', alt: 'Massing model set into desert terrain', tag: 'SITE', b: 'TERRAIN FIT', span: 'g-half' },
+  { src: 'sheet-cover-elevation.jpg', alt: 'Permit set cover sheet with rendered elevation', tag: 'SHEET', b: 'A-000 COVER', span: 'g-half' },
+  { src: 'sheet-site-plan.jpg', alt: 'Site plan sheet showing setbacks and grading', tag: 'SHEET', b: 'C-101 SITE', span: 'g-half' },
+  { src: 'sheet-dimensional-plan.jpg', alt: 'Dimensional floor plan sheet A103', tag: 'SHEET', b: 'A-103 PLAN', span: 'g-wide' },
+  { src: 'sheet-elevations.jpg', alt: 'Exterior elevation sheet A201', tag: 'SHEET', b: 'A-201 ELEV', span: 'g-tall' },
+];
+---
+<BaseLayout
+  title="Selected Work — Residential Portfolio | Quest Drafting & Design"
+  description="Selected residential projects from Quest Drafting & Design: photoreal renderings, 3D massing models, and permit-ready construction sheets across Greater Phoenix.">
+
+  <section class="work-sec">
+    <div class="wrap">
+      <div class="center-head rv">
+        <span class="mlabel">Selected work · 2024–2026</span>
+        <h2>From vision, to model,<br />to permit</h2>
+        <p class="lead" style="margin-inline:auto">A look across the practice — the renderings clients approve, the massing models we design from, and the finished sheets a city stamps.</p>
+      </div>
+      <div class="gal">
+        {projects.map((p) => (
+          <div class={`g ${p.span} rv`}>
+            <img src={`${base}/assets/${p.src}`} alt={p.alt} loading="lazy" />
+            <span class="tag sticker">{p.tag} · <b>{p.b}</b></span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="wrap in">
+      <span class="mlabel rv">Your project could be next</span>
+      <h2 class="rv">Let's draw <em>yours</em></h2>
+      <p class="rv">Every project here started with a property and an idea. Tell us about yours and we'll map the path from survey to stamp.</p>
+      <div class="ctas rv">
+        <a class="btn" href={`${base}/contact`}>Get a Quote</a>
+        <span class="dim" style="max-width:150px" aria-hidden="true"><span class="ln"></span><span>OR</span><span class="ln"></span></span>
+        <a class="btn btn-ghost" href={`${base}/services`}>See Services</a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>

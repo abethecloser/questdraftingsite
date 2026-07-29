@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+const questions = [
+  {
+    q: 'What exactly does Quest Drafting & Design do?',
+    a: 'We are a residential architectural drafting studio. We take a project from initial design through 3D visualization, a complete construction document set, and permit submittal — all under one roof, for homes across the greater Phoenix East Valley.',
+  },
+  {
+    q: 'How much does a project cost?',
+    a: 'We work on a flat fee agreed up front, based on the scope of your specific project. After we understand your property and what you want to build, you receive a single fixed price and a defined timeline — no hourly surprises.',
+  },
+  {
+    q: 'How long does a residential set take?',
+    a: 'Timelines depend on the size and complexity of the home, but every engagement includes a defined schedule agreed at the start. Design and 3D come first, followed by the coordinated construction documents, and then the permit submittal.',
+  },
+  {
+    q: "What's included in a construction document set?",
+    a: 'A typical residential set runs around 22 sheets across roughly six disciplines — cover, site, floor plans, roof plans, elevations, sections, and coordinated details — drawn to the current 2024 IBC / IRC / IECC code cycle so your builder can build from it and your city can review it.',
+  },
+  {
+    q: 'Can you design an ADU, casita, or guest house?',
+    a: 'Yes. Casitas, accessory dwelling units (ADUs), guest houses, additions, remodels, RV garages, and site structures are all part of what we design and document. What you can build depends on your lot and your jurisdiction’s zoning, which we account for in the design.',
+  },
+  {
+    q: 'Do you help with the permit itself?',
+    a: 'Yes — permit stewardship is core to what we do. We format submittals to each jurisdiction’s checklist, respond to plan-review comments and redlines, and manage resubmittals until the permit is approved.',
+  },
+  {
+    q: 'Which areas do you serve?',
+    a: 'We serve the greater Phoenix East Valley, including Gilbert, Queen Creek, Mesa, Chandler, Phoenix, and Scottsdale.',
+  },
+  {
+    q: 'Why build a 3D model before the drawings?',
+    a: 'Because it lets you approve the actual home while changes are still free. Resolving materials, massing, and design decisions in the 3D model prevents expensive changes later, once construction documents and the build are underway.',
+  },
+];
+
+const faqLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: questions.map((x) => ({
+    '@type': 'Question',
+    name: x.q,
+    acceptedAnswer: { '@type': 'Answer', text: x.a },
+  })),
+};
+---
+<BaseLayout
+  title="FAQ — Fees, Timelines, Permits & ADUs | Quest Drafting & Design"
+  description="Answers on flat-fee pricing, timelines, what a residential permit set includes, ADUs and casitas, and permit review across Greater Phoenix, Arizona.">
+
+  <section>
+    <div class="wrap">
+      <div class="center-head rv">
+        <span class="mlabel">Answers · Before you ask</span>
+        <h2>Frequently asked<br />questions</h2>
+      </div>
+      <div class="faq rv">
+        {questions.map((x) => (
+          <details>
+            <summary>{x.q}</summary>
+            <div class="a">{x.a}</div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <div class="wrap in">
+      <span class="mlabel rv">Still have a question?</span>
+      <h2 class="rv">Ask us <em>directly</em></h2>
+      <p class="rv">If your question isn't here, tell us about your project and we'll answer it — along with a flat fee and a timeline.</p>
+      <div class="ctas rv">
+        <a class="btn" href={`${base}/contact`}>Get a Quote</a>
+        <a class="btn btn-ghost" href="tel:+16023396455">Call (602) 339-6455</a>
+      </div>
+    </div>
+  </section>
+
+  <script type="application/ld+json" set:html={JSON.stringify(faqLd)} />
+</BaseLayout>
