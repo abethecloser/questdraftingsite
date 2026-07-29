@@ -2,7 +2,7 @@
 
 A standalone marketing website for Quest Drafting & Design (Gilbert, AZ), built with [Astro](https://astro.build). Every page shares one "Bureau" design so the look stays consistent automatically.
 
-**Live site:** https://abethecloser.github.io/questdraftingsite/
+**Live site:** deployed on [Vercel](https://vercel.com) (auto-deploys on every push to `main`).
 
 ## Pages
 
@@ -51,10 +51,12 @@ Newest posts show first.
 
 ## Publishing changes
 
-Pushing to the `main` branch automatically rebuilds and republishes the live site
-via GitHub Actions (see `.github/workflows/deploy.yml`). This requires the repo's
-**Settings → Pages → Build and deployment → Source** to be set to **GitHub Actions**
-(a one-time switch).
+The repo is connected to **Vercel**. Pushing to the `main` branch automatically
+rebuilds and republishes the live site — no extra steps. Vercel auto-detects Astro,
+so there is nothing to configure in the build settings.
+
+If you add a **custom domain** (or want the sitemap/canonical URLs to match the real
+domain), update `site` in `astro.config.mjs` to that domain.
 
 ## Screenshots
 
