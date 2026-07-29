@@ -1,0 +1,40 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+const fmt = (d) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+---
+<BaseLayout
+  title="Blog — Notes on Drafting, Permits & Design | Quest Drafting & Design"
+  description="Practical notes on residential drafting, permits, ADUs, timelines, and 3D design for homeowners and builders across Greater Phoenix, Arizona.">
+
+  <section>
+    <div class="wrap">
+      <div class="center-head rv">
+        <span class="mlabel">The journal · Notes &amp; guides</span>
+        <h2>From the<br />drafting table</h2>
+        <p class="lead" style="margin-inline:auto">Plain-language notes on getting a home from idea to approved permit in the East Valley — written for homeowners and builders, not for other architects.</p>
+      </div>
+      <div class="svc-grid rv">
+        {posts.map((p) => (
+          <a class="svc post-card" href={`${base}/blog/${p.slug}`}>
+            <span class="no">{fmt(p.data.date)}</span>
+            <h3>{p.data.title}</h3>
+            <p>{p.data.description}</p>
+            <span class="read-more mono">Read →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .post-card{display:flex;flex-direction:column}
+  .post-card h3{font-size:clamp(20px,2.4vw,27px)}
+  .post-card .read-more{margin-top:auto;padding-top:18px;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--copper)}
+</style>
