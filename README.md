@@ -2,7 +2,7 @@
 
 A standalone marketing website for Quest Drafting & Design (Gilbert, AZ), built with [Astro](https://astro.build). Every page shares one "Bureau" design so the look stays consistent automatically.
 
-**Live site:** https://shaningrid1207.github.io/questdrafting/
+**Live site:** https://abethecloser.github.io/questdraftingsite/
 
 ## Pages
 

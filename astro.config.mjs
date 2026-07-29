@@ -2,8 +2,8 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://shaningrid1207.github.io',
-  base: '/questdrafting',
+  site: 'https://abethecloser.github.io',
+  base: '/questdraftingsite',
   trailingSlash: 'ignore',
   integrations: [sitemap()],
 });

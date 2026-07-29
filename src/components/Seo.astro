@@ -1,12 +1,14 @@
 ---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const {
   title,
   description,
-  image = '/questdrafting/assets/render-pool-twilight.jpg',
+  image = `${base}/assets/render-pool-twilight.jpg`,
   type = 'website',
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const img = new URL(image, Astro.site).href;
+const siteHome = new URL(base + '/', Astro.site).href;
 const ld = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
@@ -15,7 +17,7 @@ const ld = {
     'Residential architectural drafting, 3D visualization, and permit stewardship in Greater Phoenix, Arizona.',
   telephone: '+1-602-339-6455',
   email: 'info@questdraftinganddesign.com',
-  url: 'https://shaningrid1207.github.io/questdrafting/',
+  url: siteHome,
   areaServed: ['Gilbert', 'Queen Creek', 'Mesa', 'Chandler', 'Phoenix', 'Scottsdale'],
   address: {
     '@type': 'PostalAddress',
