@@ -1,0 +1,101 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Contact — Get a Quote | Quest Drafting & Design, Gilbert AZ"
+  description="Tell us about your property and project. We reply with a flat fee, a defined timeline, and exactly what your jurisdiction requires. Serving the Greater Phoenix East Valley.">
+
+  <section>
+    <div class="wrap">
+      <div class="center-head rv">
+        <span class="mlabel">Gilbert · Queen Creek · Mesa · Chandler · Phoenix · Scottsdale</span>
+        <h2>Put your project<br />on the board</h2>
+        <p class="lead" style="margin-inline:auto">Tell us about your property and what you intend to create. We respond with a flat fee, a defined timeline, and exactly what your jurisdiction requires.</p>
+      </div>
+
+      <div class="two-col rv" style="gap:clamp(30px,5vw,72px)">
+        <div>
+          <span class="mlabel" style="display:block;margin-bottom:14px">Reach the studio</span>
+          <p class="prose">Prefer to talk it through? Call or email and you'll reach the studio directly — no call center, no runaround.</p>
+          <p style="margin-top:22px">
+            <span class="mlabel" style="display:block;margin-bottom:6px">Phone</span>
+            <a href="tel:+16023396455" class="contact-line">(602) 339-6455</a>
+          </p>
+          <p style="margin-top:18px">
+            <span class="mlabel" style="display:block;margin-bottom:6px">Email</span>
+            <a href="mailto:info@questdraftinganddesign.com" class="contact-line">info@questdraftinganddesign.com</a>
+          </p>
+          <p style="margin-top:18px">
+            <span class="mlabel" style="display:block;margin-bottom:6px">Service area</span>
+            <span class="prose">Gilbert · Queen Creek · Mesa<br />Chandler · Phoenix · Scottsdale</span>
+          </p>
+        </div>
+
+        <div>
+          <form class="form" id="contactForm" novalidate>
+            <div class="row">
+              <div><label for="name">Name</label><input id="name" name="name" required autocomplete="name" /></div>
+              <div><label for="email">Email</label><input id="email" name="email" type="email" required autocomplete="email" /></div>
+            </div>
+            <div><label for="phone">Phone (optional)</label><input id="phone" name="phone" type="tel" autocomplete="tel" /></div>
+            <div><label for="message">Tell us about your property &amp; project</label><textarea id="message" name="message" required></textarea></div>
+            <button class="btn" type="submit">Send Inquiry</button>
+            <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+            <p class="note">By sending, you agree we may reply about your inquiry. We never share your details.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script is:inline>
+  (function(){
+    // =====================================================================
+    // TODO: To have form submissions emailed to your inbox, sign up free at
+    // https://web3forms.com , copy your Access Key, and paste it below in
+    // place of "TODO". Until then, the form safely opens the visitor's email
+    // app pre-filled to info@questdraftinganddesign.com — nothing is lost.
+    // =====================================================================
+    var ACCESS_KEY = "TODO";
+
+    var f = document.getElementById('contactForm');
+    var s = document.getElementById('formStatus');
+    if(!f) return;
+    f.addEventListener('submit', function(e){
+      e.preventDefault();
+      if(!f.checkValidity()){ f.reportValidity(); return; }
+      var d = new FormData(f);
+      var name = d.get('name'), email = d.get('email'), phone = d.get('phone') || '', msg = d.get('message');
+
+      if(ACCESS_KEY === "TODO"){
+        var body = encodeURIComponent("Name: " + name + "\nEmail: " + email + "\nPhone: " + phone + "\n\n" + msg);
+        s.textContent = "Opening your email app…";
+        window.location.href = "mailto:info@questdraftinganddesign.com?subject=" +
+          encodeURIComponent("Project Inquiry — " + name) + "&body=" + body;
+        return;
+      }
+
+      s.textContent = "Sending…";
+      fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: ACCESS_KEY, name: name, email: email, phone: phone,
+          message: msg, subject: "Project Inquiry — " + name
+        })
+      })
+      .then(function(r){ return r.json(); })
+      .then(function(j){
+        if(j.success){ f.reset(); s.textContent = "Thank you — we'll be in touch shortly."; }
+        else { s.textContent = "Something went wrong. Please call (602) 339-6455."; }
+      })
+      .catch(function(){ s.textContent = "Something went wrong. Please call (602) 339-6455."; });
+    });
+  })();
+  </script>
+</BaseLayout>
+
+<style>
+  .contact-line{font-family:var(--mono);font-size:clamp(16px,2vw,20px);letter-spacing:.04em;color:var(--ink)}
+  .contact-line:hover{color:var(--copper)}
+</style>
